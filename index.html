@@ -4,14 +4,107 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hi~ o(*￣▽￣*)ブ</title>
+    <style>
+        #emoji, #talk {
+            transition: all 0.5s ease;
+        }
+        .fade-out {
+            opacity: 0;
+            transform: scale(0.9);
+        }
+        .fade-in {
+            opacity: 1;
+            transform: scale(1);
+        }
+        /*页面抖动动画*/
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(3px, 1px) rotate(-1deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(1px, 2px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
+        }
+        .shake-page {
+            animation: shake 0.5s;
+            animation-iteration-count: infinite;
+        }
+        /*按钮放大居中样式*/
+        .big-center-button {
+            margin-left: 0 !important;
+            transform: scale(1.2);
+            transition: transform 0.3s ease;
+        }
+    </style>
 </head>
 <body>
-    <h1>Hi~ o(*￣▽￣*)ブ</h1>
-    <p>这个网站正在建设中，期待吧，你将看到不一样的内容。</p>
-    <a href="https://www.bilibili.com" target="_blank"><button>点我去逛b站</button></a>
-    <a href="https://www.douyin.com" target="_blank">
-    <button style="margin-left: 80px;">点我去刷抖音</button>
-    </a>
+    <div id="wrap" style="text-align: center; margin-top: 100px;">
+    <h1 id="emoji">Hi~ o(*￣▽￣*)ブ</h1>
+    <p id="talk">这里是笑风生的个人网站，你没有迷路吧。</p>
+    <a id="link-wrap" href="https://www.bilibili.com" target="_blank">
+    <button id="reaction">迷路了，我是要去b站来着</button></a>
+    <button id="no-miss" style="margin-left: 80px;">我没有迷路！</button>
+    </div>
+<script>
+    const emoji = document.getElementById('emoji');
+    const talk = document.getElementById('talk');
+    const noMissButton = document.getElementById('no-miss');
+    const reactionButton = document.getElementById('reaction');
+    const wrap = document.getElementById('wrap');
+    const linkWrap = document.getElementById('link-wrap');
+    //状态锁
+    let isLocked = false;
 
+    noMissButton.addEventListener('click', () => {
+        //触发标记
+        if (isLocked) return;
+        isLocked = true;
+        //淡出动画
+        emoji.classList.add('fade-out');
+        talk.classList.add('fade-out');
+        reactionButton.classList.add('fade-out');
+        //延迟一段时间后替换文本内容
+        setTimeout(() => {
+            emoji.textContent = '太感动(╥﹏╥)了！';
+            talk.textContent = '太好了，你没有迷路！';
+            linkWrap.removeAttribute('href');
+            linkWrap.removeAttribute('target');
+            reactionButton.innerText = '刷抖音去了';
+            noMissButton.innerText = '让我了解你';
+        //淡入动画
+            emoji.classList.remove('fade-out');
+            talk.classList.remove('fade-out');
+            reactionButton.classList.remove('fade-out');
+        //给刷抖音按钮绑定点击事件
+            reactionButton.onclick = function(){
+        //页面开始抖动
+            wrap.classList.add('shake-page');
+        //文字淡出
+            emoji.classList.add('fade-out');
+            talk.classList.add('fade-out');
+        //修改文本
+            setTimeout(() => {
+                //修改文本
+                emoji.textContent = 'ヽ(｀⌒´メ)ノ';
+                talk.textContent = '不准你走';
+                //隐藏刷抖音按钮，居中另一个按钮
+                reactionButton.style.display = 'none';
+                noMissButton.classList.add('big-center-button');
+                //文字淡入,停止抖动
+                emoji.classList.remove('fade-out');
+                talk.classList.remove('fade-out');
+                wrap.classList.remove('shake-page');
+
+            }, 500);
+
+            };
+        }, 500);
+    });
+</script>
 </body>
 </html>
