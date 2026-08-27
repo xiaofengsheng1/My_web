@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>笑风生｜个人小站</title>
+    <title>Hi~ o(*￣▽￣*)ブ</title>
     <style>
         * {
             margin: 0;
@@ -203,7 +203,7 @@
             z-index: 2;
         }
 
-        /* 大封面 游戏入口大厅 */
+        /* 🎇大封面 游戏入口大厅 */
         .hero-welcome{
             min-height:85vh;
             display:flex;
@@ -465,7 +465,7 @@
     <div class="welcome-wrap" id="wrap">
         <h1 id="emoji">Hi~ o(*￣▽￣*)ブ</h1>
         <p id="talk">这里是笑风生的个人网站，你没有迷路吧。</p>
-        <a id="link-wrap" href="https://www.bilibili.com" target="_blank">
+        <a id="link-wrap" href="https://www.bilibili.com" target="_blank";>
             <button id="reaction">迷路了，我是要去b站来着</button>
         </a>
         <button id="no-miss" style="margin-left: 80px;">我没有迷路！</button>
@@ -487,10 +487,13 @@
             <section id="about">
                 <h2 class="section-title">关于我</h2>
                 <div class="about-box">
-                    <div class="avatar">😎</div>
+                    <div class="avatar"> 
+                        <img src="https://ts1.tc.mm.bing.net/th/id/R-C.2472f81ff5860dd61dfef4cd112f3df4?rik=XDJMxXfXEfkWAg&riu=http%3a%2f%2fi2.hdslb.com%2fbfs%2farchive%2fe446d3f3b32c38f3b546d2d8940b2661693ffd36.jpg&ehk=TzrKsejyr45Aq%2bBOkzShwKWCaWytiHA5qJ0872Zaefw%3d&risl=&pid=ImgRaw&r=0"
+                         style="width: 100px;height:80px;border-radius: 50%; ">
+                    </div>
                     <div class="about-text">
                         <h3>笑风生</h3>
-                        <p>爱好广泛，像一条四处啃噬的杂鱼。<br>一直在学习新东西，慢慢搭建属于自己的线上小世界。</p>
+                        <p>爱好敲代码、做动画、编曲、剪辑、绘画，喜欢折腾各种有意思的小demo。<br>虽然爱好很多，但水平都不高（悲催〒▽〒）。</p>
                     </div>
                 </div>
             </section>
@@ -500,13 +503,13 @@
                 <div class="card-wrap">
                     <div class="card">
                         <h3>网页交互Demo</h3>
-                        <div class="project-item">迷路互动首页</div>
+                        <div class="project-item">待更新项目</div>
                         <div class="project-item">待更新项目</div>
                         <div class="project-item">待更新项目</div>
                     </div>
                     <div class="card">
                         <h3>其他创作</h3>
-                        <div class="project-item">画画习作</div>
+                        <div class="project-item">动画习作</div>
                         <div class="project-item">音乐片段</div>
                         <div class="project-item">剪辑小短片</div>
                     </div>
@@ -517,8 +520,8 @@
                 <h2 class="section-title">碎碎念</h2>
                 <div class="card-wrap">
                     <div class="card">
-                        <h3>日常想法</h3>
-                        <p>网站还在持续施工，以后会在这里记录学习心得和脑洞想法。</p>
+                        <h3>碎碎念</h3>
+                        <p>我的天呐，这里怎么一个作品也没有。</p>
                     </div>
                 </div>
             </section>
@@ -527,7 +530,8 @@
 
     <footer>
         <p>笑风生 © 2026</p>
-        <p>HTML + CSS Flex + JS 搭建</p>
+        <p>看下面↓</p>
+        <a href="https://space.bilibili.com/24372979?spm_id_from=333.337.0.0 "style="color:#4488dd;text-decoration:none;">我的b站主页( ੭ ˙ᗜ˙ )੭</a>
     </footer>
 
 <script>
@@ -554,8 +558,8 @@
         },
         mouseStates: {
             default: { emoji: "(･ω･)", talk: "在暖融融的空间闲逛～" },
-            about:   { emoji: "(◍•ᴗ•◍)", talk: "这是关于我的小故事" },
-            works:   { emoji: "(≧∇≦)", talk: "看看我的各种小创作吧" },
+            about:   { emoji: "(￣▽￣;)", talk: "贪多嚼不烂" },
+            works:   { emoji: "(＞﹏＜)", talk: "Eeeee~" },
             thoughts:{ emoji: "(๑• . •๑)", talk: "来读读我的碎碎念" },
             nav:     { emoji: "(・ω・)", talk: "要跳转到哪个板块？" }
         }
@@ -656,7 +660,7 @@
             linkWrap.removeAttribute('href');
             linkWrap.removeAttribute('target');
             fadeIn([emoji,talk,reactionButton,noMissButton]);
-
+            noMissButton.onclick = enterHomeMode;//场景1完成后选项可以直接进入主页
             reactionButton.onclick = function(e) {
                 e.preventDefault();
                 wrap.classList.add('shake-page');
