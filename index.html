@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="笑风生的个人网站">
     <title>Hi~ o(*￣▽￣*)ブ</title>
     <style>
         * {
@@ -17,6 +18,13 @@
             color: #333;
             line-height: 1.6;
             transition: background-color 0.6s ease, color 0.6s ease;
+        }
+        /* 迎客区按钮样式 */
+        #reaction, #no-miss {
+            font-size: 15px;     
+            padding: 7px 10px;  
+            border-width: 2px; 
+            margin-top: 10px;;
         }
 
         /* ========== 篝火主页模式 切换整体主题 ========== */
@@ -40,19 +48,6 @@
             z-index: 0;
         }
 
-        /* 小火苗装饰 */
-        .firefly {
-            position: fixed;
-            width: 18px;
-            height: 18px;
-            background: radial-gradient(circle, rgba(255, 210, 120, 0.95), rgba(255, 110, 60, 0.65), transparent 70%);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 1;
-            animation: floatFire 8s ease-in-out infinite;
-            bottom: 20%;
-            right: 15%;
-        }
         @keyframes floatFire {
             0% { transform: translateY(0px) translateX(0px); opacity: 0.55; }
             50% { transform: translateY(-12px) translateX(8px); opacity: 1; }
@@ -465,9 +460,7 @@
     <div class="welcome-wrap" id="wrap">
         <h1 id="emoji">Hi~ o(*￣▽￣*)ブ</h1>
         <p id="talk">这里是笑风生的个人网站，你没有迷路吧。</p>
-        <a id="link-wrap" href="https://www.bilibili.com" target="_blank";>
-            <button id="reaction">迷路了，我是要去b站来着</button>
-        </a>
+        <button id="reaction">迷路了，我是要去b站来着</button>
         <button id="no-miss" style="margin-left: 80px;">我没有迷路！</button>
     </div>
 
@@ -575,6 +568,10 @@
     const fireParticles = document.getElementById('fire-particles');
     const navWidget = document.getElementById('navWidget');
 
+    // 初始状态，点击打开B站
+    reactionButton.onclick = function(){
+        window.open("https://www.bilibili.com","_blank");
+    };
     let isLocked = false;
     let isHomeMode = false;
 
@@ -625,52 +622,73 @@
         setTimeout(() => { particle.remove(); }, (duration + delay) * 1000);
     }
     setInterval(createFireParticle, 220);
-
+    //进入大厅函数
     function enterHomeMode() {
         if (isHomeMode) return;
         isHomeMode = true;
+        //隐藏开场按钮
         reactionButton.style.display = 'none';
         noMissButton.style.display = 'none';
-
+        //加飞行动画
         emoji.classList.add('fly-to-widget');
         talk.classList.add('fly-to-widget');
+        //body标签加home-mode类
         document.body.classList.add('home-mode');
-
+        //定时器1：等待900ms
         setTimeout(() => {
+            //900ms后移除飞行动画样式
             emoji.classList.remove('fly-to-widget');
             talk.classList.remove('fly-to-widget');
+            //emoji，talk出现在导航栏
             navWidget.appendChild(emoji);
             navWidget.appendChild(talk);
+            //文本切换到step3
             setText(TEXT_CONFIG.step3_home);
         }, 900);
-
+        //定时器2，等待500ms，给大厅区(hall)加上show类
+        //show会解除opacity:0
         setTimeout(() => {
             hall.classList.add('show');
         }, 500);
-
+        //全局监听鼠标移动事件，触发hmm，实现悬浮板切换文字
         document.addEventListener('mousemove', handleMouseMove);
     }
-
+    //给no miss button 绑定点击事件
     noMissButton.addEventListener('click', () => {
         if (isLocked) return;
+        //上锁
         isLocked = true;
+        //做淡出动画
         fadeOut([emoji,talk,reactionButton,noMissButton]);
+        // 等500ms，然后再继续执行
         setTimeout(() => {
+            //切换文本至step1
             setText(TEXT_CONFIG.step1_noMiss);
-            linkWrap.removeAttribute('href');
-            linkWrap.removeAttribute('target');
+            //元素淡入回来
             fadeIn([emoji,talk,reactionButton,noMissButton]);
-            noMissButton.onclick = enterHomeMode;//场景1完成后选项可以直接进入主页
+            //覆盖no miss button 点击事件，点击即enterHome
+            noMissButton.onclick = enterHomeMode;
+            //覆盖reaction点击事件，点击会使文本进入step2
             reactionButton.onclick = function(e) {
+                //阻止浏览器默认行为
                 e.preventDefault();
+                //页面触发抖动
                 wrap.classList.add('shake-page');
+                //颜文字淡出
                 fadeOut([emoji,talk]);
+                //等500ms
                 setTimeout(() => {
+                    //切至step2文本
                     setText(TEXT_CONFIG.step2_blockLeave);
+                    //隐藏reac按钮
                     reactionButton.style.display = 'none';
+                    //放大居中nmb按钮
                     noMissButton.classList.add('big-center-button');
+                    //文字淡入
                     fadeIn([emoji,talk]);
+                    //停止晃动
                     wrap.classList.remove('shake-page');
+                    //再次点击进入主页
                     noMissButton.onclick = enterHomeMode;
                 },500);
             };
